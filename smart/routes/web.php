@@ -22,7 +22,7 @@ Route::get( '/welcome', function () {
     return view('welcome');
 })->name('welcome');
 // auth
-Route::get('/register', [AuthController::class, 'showRegister']);
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -30,7 +30,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // 
 
-Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles.index');
+Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles');
 
 Route::get('/profiles_create', [ProfileController::class, 'create'])->name('profiles.create');
 Route::post('/profiles_create', [ProfileController::class, 'store'])->name('profiles.store');

@@ -58,7 +58,8 @@ public function register(Request $request)
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            return to_route('welcome');
+            $request->session()->put('user_id',$user->id);
+            return to_route('profiles');
         }
 
         return back()->withErrors(['email' => 'incorrect informations']);

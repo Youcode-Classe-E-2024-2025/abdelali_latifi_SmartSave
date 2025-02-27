@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;  // Assure-toi d'importer la classe Request
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage; 
 
 class ProfileController extends Controller
 {
@@ -34,9 +34,9 @@ class ProfileController extends Controller
         // Validation des données du formulaire
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'user_id' => 'required|exists:users,id', // L'utilisateur doit exister
+            'img' => 'required|image',
         ]);
+        
 
         // Stocker l'image et obtenir son chemin
         $imagePath = $request->file('img')->store('profiles', 'public');
@@ -45,10 +45,9 @@ class ProfileController extends Controller
         Profile::create([
             'name' => $validated['name'],
             'img' => $imagePath,
-            'user_id' => $validated['user_id'],
+            'user_id' => session('user_id'),
         ]);
-
-        // Rediriger vers la page des profils
+        
         return redirect()->route('profiles')->with('success', 'Profil ajouté avec succès.');
     }
 }
