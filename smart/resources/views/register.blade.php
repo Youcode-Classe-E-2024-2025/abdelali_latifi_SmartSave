@@ -9,7 +9,7 @@
 <body class="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-gray-200">
     <div class="w-full max-w-md p-6 bg-gray-800/90 backdrop-blur-md rounded-lg shadow-lg">
         <h2 class="text-2xl font-semibold text-center text-gray-100">Inscription</h2>
-        <form action="/registre" method="POST" class="mt-4 space-y-4">
+        <form action="/register" method="POST" class="mt-4 space-y-4">
             @csrf
             <div>
                 <label class="block text-sm font-medium text-gray-300">Nom</label>

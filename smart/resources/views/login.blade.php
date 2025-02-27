@@ -38,7 +38,7 @@
             </button>
         </form>
         <p class="mt-3 text-center text-sm text-gray-400">Pas encore inscrit ? 
-            <a href="/signup" class="text-blue-400 hover:text-blue-300 transition-all duration-200">Créer un compte</a>
+            <a href="/register" class="text-blue-400 hover:text-blue-300 transition-all duration-200">Créer un compte</a>
         </p>
     </div>
 </body>
