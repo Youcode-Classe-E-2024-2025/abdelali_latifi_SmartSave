@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,21 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // 
 
 Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles');
-
 Route::get('/profiles_create', [ProfileController::class, 'create'])->name('profiles.create');
 Route::post('/profiles_create', [ProfileController::class, 'store'])->name('profiles.store');
+
+//
+Route::get('/home', [AuthController::class, 'showHome'])->name('home');
+
+
+use App\Http\Controllers\FinancialController;
+
+Route::middleware('auth')->group(function () {
+    Route::get('/create-transaction', [FinancialController::class, 'createTransaction']);
+    Route::post('/store-transaction', [FinancialController::class, 'storeTransaction'])->name('financial.storeTransaction');
+    Route::get('/create-goal', [FinancialController::class, 'createGoal']);
+    Route::post('/store-goal', [FinancialController::class, 'storeGoal'])->name('financial.storeGoal');
+    Route::get('/goals', [FinancialController::class, 'showGoals']);
+});
+
+
