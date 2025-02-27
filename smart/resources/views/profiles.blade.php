@@ -13,7 +13,7 @@
 
     <!-- Bouton pour ajouter un profil -->
     <div class="mb-6">
-        <a href="/add-profile" class="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300">
+        <a href="/profiles_create" class="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-full hover:bg-blue-700 transition duration-300">
             Ajouter un Profil
         </a>
     </div>

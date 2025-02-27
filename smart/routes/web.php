@@ -31,3 +31,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // 
 
 Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles.index');
+
+Route::get('/profiles_create', [ProfileController::class, 'create'])->name('profiles.create');
+Route::post('/profiles_create', [ProfileController::class, 'store'])->name('profiles.store');
