@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/goals', [FinancialController::class, 'showGoals']);
 });
 
-
+//
 Route::get('/create-goal', [FinancialController::class, 'createGoal'])->name('financial.createGoal');
 Route::get('/create-transaction', [FinancialController::class, 'createTransaction'])->name('financial.createTransaction');
 

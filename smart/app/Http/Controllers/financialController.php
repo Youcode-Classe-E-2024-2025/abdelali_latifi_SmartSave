@@ -12,7 +12,7 @@ class FinancialController extends Controller
     public function createTransaction()
     {
         $goals = Goal::all(); // Récupérer tous les objectifs pour les lier à une transaction
-        return view('financial.create_transaction', compact('goals'));
+        return view('create_transaction', compact('goals'));
     }
 
     // Ajouter une transaction
@@ -33,13 +33,13 @@ class FinancialController extends Controller
             'goal_id' => $request->goal_id,
         ]);
 
-        return redirect()->route('dashboard'); // Rediriger vers la page du tableau de bord ou autre
+        return redirect()->route('home'); // Rediriger vers la page du tableau de bord ou autre
     }
 
     // Afficher le formulaire pour ajouter un objectif
     public function createGoal()
     {
-        return view('financial.create_goal');
+        return view('create_goal');
     }
 
     // Ajouter un objectif
@@ -56,13 +56,13 @@ class FinancialController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('home');
     }
 
     // Afficher tous les objectifs financiers et les transactions associées
     public function showGoals()
     {
         $goals = Goal::where('user_id', auth()->id())->with('transactions')->get();
-        return view('financial.goals', compact('goals'));
+        return view('goals', compact('goals'));
     }
 }
