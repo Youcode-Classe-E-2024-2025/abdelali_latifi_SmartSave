@@ -7,6 +7,15 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
+
+<!-- Affichage du profil -->
+<div class="flex items-center mb-6">
+    <img src="{{ asset('storage/' . $profile->img) }}" alt="Photo de {{ $profile->name }}" class="w-16 h-16 rounded-full border-2 border-blue-600">
+    <div class="ml-4">
+        <h2 class="text-xl font-semibold text-gray-800">{{ $profile->name }}</h2>
+        <p class="text-sm text-gray-600">Bienvenue sur votre tableau de bord</p>
+    </div>
+</div>
     <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-8">
         <h1 class="text-3xl font-semibold text-center text-blue-600 mb-6">Bienvenue dans SaveSmart</h1>
 

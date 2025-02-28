@@ -6,6 +6,7 @@ use App\Models\Transaction;
 use App\Models\Goal;
 use Illuminate\Http\Request;
 
+
 class FinancialController extends Controller
 {
     // Afficher le formulaire pour ajouter une transaction
@@ -17,24 +18,29 @@ class FinancialController extends Controller
 
     // Ajouter une transaction
     public function storeTransaction(Request $request)
-    {
-        $request->validate([
-            'type' => 'required|in:income,expense',
-            'amount' => 'required|numeric',
-            'description' => 'required|string',
-            'goal_id' => 'nullable|exists:goals,id',
-        ]);
+{
+    $request->validate([
+        'type' => 'required|in:income,expense',
+        'amount' => 'required|numeric',
+        'description' => 'required|string',
+        'goal_id' => 'nullable|exists:goals,id',
+    ]);
 
-        Transaction::create([
-            'type' => $request->type,
-            'amount' => $request->amount,
-            'description' => $request->description,
-            'user_id' => auth()->id(),
-            'goal_id' => $request->goal_id,
-        ]);
-
-        return redirect()->route('home'); // Rediriger vers la page du tableau de bord ou autre
+    $profile = auth()->user()->profiles()->first(); // Récupérer le premier profil de l'utilisateur
+    if (!$profile) {
+        return redirect()->route('welcome')->with('error', 'Aucun profil trouvé.');
     }
+
+    Transaction::create([
+        'type' => $request->type,
+        'amount' => $request->amount,
+        'description' => $request->description,
+        'user_id' => auth()->id(),
+        'goal_id' => $request->goal_id,
+    ]);
+
+    return redirect()->route('home', ['id' => $profile->id]);
+}
 
     // Afficher le formulaire pour ajouter un objectif
     public function createGoal()
@@ -49,16 +55,20 @@ class FinancialController extends Controller
             'name' => 'required|string',
             'target_amount' => 'required|numeric',
         ]);
-
+    
+        $profile = auth()->user()->profiles()->first(); // Récupérer le premier profil de l'utilisateur
+        if (!$profile) {
+            return redirect()->route('welcome')->with('error', 'Aucun profil trouvé.');
+        }
+    
         Goal::create([
             'name' => $request->name,
             'target_amount' => $request->target_amount,
             'user_id' => auth()->id(),
         ]);
-
-        return redirect()->route('home');
+    
+        return redirect()->route('home', ['id' => $profile->id]);
     }
-
     // Afficher tous les objectifs financiers et les transactions associées
     public function showGoals()
     {
