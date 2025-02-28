@@ -19,7 +19,7 @@
     </div>
 
     <!-- Conteneur des profils -->
-     <a href="/home">ccc</a>
+    <a href="/home">
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach ($profiles as $profile)
             <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
@@ -30,6 +30,7 @@
             </div>
         @endforeach
     </div>
+    </a>
 </div>
 
 </body>

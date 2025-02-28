@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -36,7 +37,7 @@ Route::get('/profiles_create', [ProfileController::class, 'create'])->name('prof
 Route::post('/profiles_create', [ProfileController::class, 'store'])->name('profiles.store');
 
 //
-Route::get('/home', [AuthController::class, 'showHome'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 use App\Http\Controllers\FinancialController;
@@ -49,4 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/goals', [FinancialController::class, 'showGoals']);
 });
 
+
+Route::get('/create-goal', [FinancialController::class, 'createGoal'])->name('financial.createGoal');
+Route::get('/create-transaction', [FinancialController::class, 'createTransaction'])->name('financial.createTransaction');
 

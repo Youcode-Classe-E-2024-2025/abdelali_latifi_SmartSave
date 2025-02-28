@@ -11,23 +11,24 @@
 
         <!-- Affichage des objectifs financiers -->
         <section class="goals-section">
-            <h2>Mes Objectifs Financiers</h2>
-            @if($goals->isEmpty())
-                <p>Aucun objectif ajouté pour le moment.</p>
-            @else
-                <ul>
-                    @foreach($goals as $goal)
-                        <li>
-                            <strong>{{ $goal->name }}</strong><br>
-                            Montant cible: {{ number_format($goal->target_amount, 2) }}€<br>
-                            Montant actuel: {{ number_format($goal->current_amount, 2) }}€<br>
-                            <progress value="{{ $goal->current_amount }}" max="{{ $goal->target_amount }}"></progress>
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
-            <a href="{{ route('financial.createGoal') }}" class="btn btn-primary">Ajouter un Objectif</a>
-        </section>
+    <h2>Mes Objectifs Financiers</h2>
+    @if($goals->isEmpty())
+        <p>Aucun objectif ajouté pour le moment.</p>
+    @else
+        <ul>
+            @foreach($goals as $goal)
+                <li>
+                    <strong>{{ $goal->name }}</strong><br>
+                    Montant cible: {{ number_format($goal->target_amount, 2) }}€<br>
+                    Montant actuel: {{ number_format($goal->current_amount, 2) }}€<br>
+                    <progress value="{{ $goal->current_amount }}" max="{{ $goal->target_amount }}"></progress>
+                </li>
+            @endforeach
+        </ul>
+    @endif
+    <a href="{{ route('financial.createGoal') }}" class="btn btn-primary">Ajouter un Objectif</a>
+</section>
+
 
         <hr>
 
