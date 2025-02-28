@@ -19,18 +19,18 @@
     </div>
 
     <!-- Conteneur des profils -->
-    <a href="/home">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        @foreach ($profiles as $profile)
-            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <img src="{{ asset('storage/' . $profile->img) }}" alt="Image de profil" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h2 class="text-lg font-semibold text-gray-800">{{ $profile->name }}</h2>
-                </div>
+    @foreach ($profiles as $profile)
+    <a href="{{ route('home', ['id' => $profile->id]) }}">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <img src="{{ asset('storage/' . $profile->img) }}" alt="Image de profil" class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h2 class="text-lg font-semibold text-gray-800">{{ $profile->name }}</h2>
             </div>
-        @endforeach
-    </div>
+        </div>
     </a>
+@endforeach
+
+
 </div>
 
 </body>

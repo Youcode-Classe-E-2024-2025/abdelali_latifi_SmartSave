@@ -37,8 +37,8 @@ Route::get('/profiles_create', [ProfileController::class, 'create'])->name('prof
 Route::post('/profiles_create', [ProfileController::class, 'store'])->name('profiles.store');
 
 //
-Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+Route::get('/home/{id}', [HomeController::class, 'index'])->name('home');
 
 use App\Http\Controllers\FinancialController;
 

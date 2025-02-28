@@ -7,7 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
-
     <div class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-8">
         <h1 class="text-3xl font-semibold text-center text-blue-600 mb-6">Bienvenue dans SaveSmart</h1>
 
