@@ -165,4 +165,24 @@ public function deleteTransaction($id)
     return redirect()->route('home', ['id' => $profile->id])->with('success', 'Transaction supprimée avec succès.');
 }
 
+public function showDashboard()
+{
+    // Récupérer l'utilisateur connecté
+    $user = auth()->user();
+
+    // Récupérer toutes les transactions de l'utilisateur
+    $transactions = $user->transactions; // Assurez-vous que la relation transactions est bien définie
+
+    // Calculer la somme des revenus
+    $totalIncome = $transactions->where('type', 'income')->sum('amount');
+
+    // Calculer la somme des dépenses
+    $totalExpense = $transactions->where('type', 'expense')->sum('amount');
+
+    // Retourner la vue avec les données nécessaires
+    return view('dashboard', compact('transactions', 'totalIncome', 'totalExpense'));
+}
+
+
+
 }

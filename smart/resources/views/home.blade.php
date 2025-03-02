@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SaveSmart</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100 font-sans text-gray-800">
 
@@ -99,15 +100,52 @@
 
     <hr class="my-6 border-gray-300">
 
-    <!-- Visualisation du budget -->
-    <section>
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Visualisation du Budget</h2>
-        <p class="text-gray-600 mb-4">Voici un aperçu de vos revenus et dépenses sous forme de diagrammes.</p>
-        <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-            <!-- Placeholder pour les graphiques -->
-            <div id="income-expense-chart" class="h-64 bg-gray-200 rounded-lg"></div>
-        </div>
-    </section>
+   <!-- Visualisation du budget -->
+<section>
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Visualisation du Budget</h2>
+    <p class="text-gray-600 mb-4">Voici un aperçu de vos revenus et dépenses sous forme de diagrammes.</p>
+    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+        <!-- Placeholder pour les graphiques -->
+        <canvas id="incomeExpenseChart" class="h-64 bg-gray-200 rounded-lg"></canvas>
+    </div>
+</section>
+<script>
+    // Assurez-vous que les variables sont bien définies avant utilisation
+    const incomeData = @json($totalIncome ?? 0);
+    const expenseData = @json($totalExpense ?? 0);
+
+    const ctx = document.getElementById('incomeExpenseChart').getContext('2d');
+    
+    const incomeExpenseChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Revenus', 'Dépenses'],
+            datasets: [{
+                label: 'Répartition du Budget',
+                data: [incomeData, expenseData], // Données dynamiques
+                backgroundColor: ['#36A2EB', '#FF6384'],
+                borderColor: ['#36A2EB', '#FF6384'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ': ' + tooltipItem.raw + '€'; // Affichage en euros
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
 </div>
 
 </body>
