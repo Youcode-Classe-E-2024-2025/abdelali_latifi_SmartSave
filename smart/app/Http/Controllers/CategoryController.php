@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 class CategoryController extends Controller
 {
@@ -36,7 +37,7 @@ class CategoryController extends Controller
     // Afficher les catégories sur la page home
     public function index()
     {
-        $categories = Category::all(); // Récupérer toutes les catégories
+        $categories = Category::where('user_id', session('user_id')->get()); // Récupérer les catégories de l'utilisateur connecté
         return view('home', compact('categories')); // Passer la variable à la vue
     }
     
