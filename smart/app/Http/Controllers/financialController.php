@@ -164,5 +164,4 @@ public function deleteTransaction($id)
 
     return redirect()->route('home', ['id' => $profile->id])->with('success', 'Transaction supprimée avec succès.');
 }
-
 }

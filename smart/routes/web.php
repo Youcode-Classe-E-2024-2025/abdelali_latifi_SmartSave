@@ -58,3 +58,4 @@ Route::get('create_category', [CategoryController::class, 'create'])->name('cate
 Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
 // Supprimer une catégorie
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+

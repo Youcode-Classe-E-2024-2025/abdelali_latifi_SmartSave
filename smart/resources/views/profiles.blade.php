@@ -18,19 +18,23 @@
         </a>
     </div>
 
-    <!-- Conteneur des profils -->
-    @foreach ($profiles as $profile)
-    <a href="{{ route('home', ['id' => $profile->id]) }}">
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-            <img src="{{ asset('storage/' . $profile->img) }}" alt="Image de profil" class="w-full h-48 object-cover">
-            <div class="p-4">
-                <h2 class="text-lg font-semibold text-gray-800">{{ $profile->name }}</h2>
+    <!-- Conteneur des profils (grille de cartes de profil) -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
+        @foreach ($profiles as $profile)
+        <a href="{{ route('home', ['id' => $profile->id]) }}">
+            <div class="relative group">
+                <div class="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <!-- Image de profil -->
+                    <img src="{{ asset('storage/' . $profile->img) }}" alt="Image de profil" class="w-full h-48 object-cover group-hover:opacity-80 transition-opacity duration-300">
+                </div>
+                <!-- Nom du profil -->
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-transparent to-transparent p-2">
+                    <h2 class="text-white text-lg font-semibold">{{ $profile->name }}</h2>
+                </div>
             </div>
-        </div>
-    </a>
-@endforeach
-
-
+        </a>
+        @endforeach
+    </div>
 </div>
 
 </body>
