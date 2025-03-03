@@ -96,57 +96,17 @@
     @endif
     <a href="{{ route('financial.createTransaction') }}" class="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">Ajouter une Transaction</a>
 </section>
-
-
-    <hr class="my-6 border-gray-300">
-
-   <!-- Visualisation du budget -->
-<section>
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Visualisation du Budget</h2>
-    <p class="text-gray-600 mb-4">Voici un aperçu de vos revenus et dépenses sous forme de diagrammes.</p>
-    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-        <!-- Placeholder pour les graphiques -->
-        <canvas id="incomeExpenseChart" class="h-64 bg-gray-200 rounded-lg"></canvas>
-    </div>
-</section>
-<script>
-    // Assurez-vous que les variables sont bien définies avant utilisation
-    const incomeData = @json($totalIncome ?? 0);
-    const expenseData = @json($totalExpense ?? 0);
-
-    const ctx = document.getElementById('incomeExpenseChart').getContext('2d');
-    
-    const incomeExpenseChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-            labels: ['Revenus', 'Dépenses'],
-            datasets: [{
-                label: 'Répartition du Budget',
-                data: [incomeData, expenseData], // Données dynamiques
-                backgroundColor: ['#36A2EB', '#FF6384'],
-                borderColor: ['#36A2EB', '#FF6384'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                tooltip: {
-                    callbacks: {
-                        label: function(tooltipItem) {
-                            return tooltipItem.label + ': ' + tooltipItem.raw + '€'; // Affichage en euros
-                        }
-                    }
-                }
-            }
-        }
-    });
-</script>
-
-</div>
+<!-- Affichage des catégories -->
+@if(isset($categories))
+    @foreach($categories as $category)
+        <li>{{ $category->name }}</li>
+    @endforeach
+@else
+    <p>Aucune catégorie disponible.</p>
+@endif
+<a href="{{ route('categories.create') }}" class="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition">
+    Ajouter une Catégorie
+</a>
 
 </body>
 </html>

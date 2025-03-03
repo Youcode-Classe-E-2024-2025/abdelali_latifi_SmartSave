@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\FinancialController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CategoryController;
 
 // Accueil
 Route::get('/', function () {
@@ -49,3 +50,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/transaction/{id}', [FinancialController::class, 'updateTransaction'])->name('financial.updateTransaction');
     Route::delete('/transaction/{id}', [FinancialController::class, 'deleteTransaction'])->name('financial.deleteTransaction');
 });
+
+
+Route::get('create_category', [CategoryController::class, 'create'])->name('categories.create');
+
+// Enregistrer une nouvelle catégorie
+Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+// Supprimer une catégorie
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
