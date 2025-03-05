@@ -116,6 +116,116 @@
     </a>
 
 </div>
+<section class="mb-8">
+    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Statistiques Financières Mensuelles</h2>
+    
+    <div class="grid grid-cols-2 gap-4">
+        <div class="bg-blue-100 p-4 rounded-lg">
+            <h3 class="font-semibold">Revenus Totaux</h3>
+            <p class="text-2xl text-green-600">{{ number_format($monthlyStats['total_income'], 2) }}€</p>
+        </div>
+        <div class="bg-red-100 p-4 rounded-lg">
+            <h3 class="font-semibold">Dépenses Totales</h3>
+            <p class="text-2xl text-red-600">{{ number_format($monthlyStats['total_expenses'], 2) }}€</p>
+        </div>
+        <div class="bg-gray-100 p-4 rounded-lg">
+            <h3 class="font-semibold">Solde Net</h3>
+            <p class="text-2xl {{ $monthlyStats['net_balance'] >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                {{ number_format($monthlyStats['net_balance'], 2) }}€
+            </p>
+        </div>
+        <div class="bg-purple-100 p-4 rounded-lg">
+            <h3 class="font-semibold">Transactions</h3>
+            <p>Revenus: {{ $monthlyStats['income_transactions_count'] }}</p>
+            <p>Dépenses: {{ $monthlyStats['expense_transactions_count'] }}</p>
+        </div>
+    </div>
+</section>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Préparation des données depuis les variables PHP
+    const transactions = @json($transactions);
+    const goals = @json($goals);
+
+    // Revenus vs Dépenses
+    const incomeExpenseData = {
+        labels: ['Revenus', 'Dépenses'],
+        datasets: [{
+            data: [
+                transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0),
+                transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0)
+            ],
+            backgroundColor: ['#34D399', '#F87171']
+        }]
+    };
+
+    new Chart(document.getElementById('incomeExpenseChart'), {
+        type: 'pie',
+        data: incomeExpenseData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // Répartition des Transactions
+    const transactionTypeData = {
+        labels: ['Revenus', 'Dépenses'],
+        datasets: [{
+            data: [
+                transactions.filter(t => t.type === 'income').length,
+                transactions.filter(t => t.type === 'expense').length
+            ],
+            backgroundColor: ['#34D399', '#F87171']
+        }]
+    };
+
+    new Chart(document.getElementById('transactionTypeChart'), {
+        type: 'doughnut',
+        data: transactionTypeData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    // Progression des Objectifs
+    const goalProgressData = {
+        labels: goals.map(g => g.name),
+        datasets: [{
+            label: 'Progression',
+            data: goals.map(g => (g.current_amount / g.target_amount) * 100),
+            backgroundColor: '#3B82F6'
+        }]
+    };
+
+    new Chart(document.getElementById('goalProgressChart'), {
+        type: 'bar',
+        data: goalProgressData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%'
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+});
+</script>
 
 </body>
 </html>

@@ -164,4 +164,17 @@ public function deleteTransaction($id)
 
     return redirect()->route('home', ['id' => $profile->id])->with('success', 'Transaction supprimée avec succès.');
 }
+
+public function showStatistics()
+{
+    // Total des revenus et des dépenses
+    $incomeTotal = Transaction::where('user_id', auth()->id())->where('type', 'income')->sum('amount');
+    $expenseTotal = Transaction::where('user_id', auth()->id())->where('type', 'expense')->sum('amount');
+    
+    // Total des montants cibles des objectifs
+    $goalsTotal = Goal::where('user_id', auth()->id())->sum('target_amount');
+
+    return view('statistics', compact('incomeTotal', 'expenseTotal', 'goalsTotal'));
+}
+
 }
