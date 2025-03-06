@@ -218,66 +218,109 @@
 
     <!-- Le script reste identique à la version précédente -->
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const transactions = @json($transactions);
-        const goals = @json($goals);
+   document.addEventListener('DOMContentLoaded', function() {
+    // Log des transactions brutes pour vérification
+    const transactions = @json($transactions);
+    console.log("Transactions brutes:", transactions);
 
-        // Configuration des graphiques avec des améliorations
-        const chartOptions = {
-            responsive: true,
-            plugins: {
-                datalabels: {
-                    color: 'white',
-                    font: { weight: 'bold' }
-                },
-                legend: { position: 'bottom' }
-            }
-        };
+    // Calcul manuel des totaux pour vérification
+    const incomeTotal = transactions
+        .filter(t => t.type === 'income')
+        .reduce((sum, t) => sum + parseFloat(t.amount), 0);
+    
+    const expenseTotal = transactions
+        .filter(t => t.type === 'expense')
+        .reduce((sum, t) => sum + parseFloat(t.amount), 0);
 
-        // Revenus vs Dépenses
-        new Chart(document.getElementById('incomeExpenseChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Revenus', 'Dépenses'],
-                datasets: [{
-                    data: [
-                        transactions.filter(t => t.type === 'income').reduce((sum, t) => sum + t.amount, 0),
-                        transactions.filter(t => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0)
-                    ],
-                    backgroundColor: ['#34D399', '#F87171']
-                }]
-            },
-            options: {
-                ...chartOptions,
-                plugins: {
-                    ...chartOptions.plugins,
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return ` ${context.label}: ${context.formattedValue}€`;
-                            }
-                        }
+    console.log("Total Revenus:", incomeTotal);
+    console.log("Total Dépenses:", expenseTotal);
+
+    // Configuration des graphiques avec debug
+    const chartOptions = {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return ` ${context.label}: ${context.formattedValue}€`;
                     }
                 }
             }
-        });
+        }
+    };
 
-        // Répartition des Transactions
-        new Chart(document.getElementById('transactionTypeChart'), {
-            type: 'pie',
-            data: {
-                labels: ['Revenus', 'Dépenses'],
-                datasets: [{
-                    data: [
-                        transactions.filter(t => t.type === 'income').length,
-                        transactions.filter(t => t.type === 'expense').length
-                    ],
-                    backgroundColor: ['#34D399', '#F87171']
-                }]
-            },
-            options: chartOptions
-        });
+    // Vérification de l'existence des canvas
+    const incomeExpenseCanvas = document.getElementById('incomeExpenseChart');
+    const transactionTypeCanvas = document.getElementById('transactionTypeChart');
+
+    if (!incomeExpenseCanvas || !transactionTypeCanvas) {
+        console.error("Un ou plusieurs canvas sont manquants");
+        return;
+    }
+
+    // Graphique Revenus vs Dépenses
+    new Chart(incomeExpenseCanvas, {
+        type: 'pie',  // Changé en pie pour plus de clarté
+        data: {
+            labels: ['Revenus', 'Dépenses'],
+            datasets: [{
+                data: [
+                    incomeTotal, 
+                    expenseTotal
+                ],
+                backgroundColor: ['#34D399', '#F87171']
+            }]
+        },
+        options: {
+            ...chartOptions,
+            plugins: {
+                ...chartOptions.plugins,
+                datalabels: {
+                    formatter: (value, context) => {
+                        const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                        const percentage = ((value / total) * 100).toFixed(1) + '%';
+                        return percentage;
+                    },
+                    color: 'white',
+                    font: { weight: 'bold' }
+                }
+            }
+        }
     });
-    </script>
+
+    // Graphique Répartition des Transactions
+    const incomeTransactionsCount = transactions.filter(t => t.type === 'income').length;
+    const expenseTransactionsCount = transactions.filter(t => t.type === 'expense').length;
+
+    new Chart(transactionTypeCanvas, {
+        type: 'doughnut',
+        data: {
+            labels: ['Revenus', 'Dépenses'],
+            datasets: [{
+                data: [
+                    incomeTransactionsCount,
+                    expenseTransactionsCount
+                ],
+                backgroundColor: ['#34D399', '#F87171']
+            }]
+        },
+        options: {
+            ...chartOptions,
+            plugins: {
+                ...chartOptions.plugins,
+                datalabels: {
+                    formatter: (value, context) => {
+                        const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                        const percentage = ((value / total) * 100).toFixed(1) + '%';
+                        return percentage;
+                    },
+                    color: 'white',
+                    font: { weight: 'bold' }
+                }
+            }
+        }
+    });
+});    </script>
 </body>
 </html>
