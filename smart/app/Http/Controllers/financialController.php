@@ -6,7 +6,7 @@ use App\Models\Transaction;
 use App\Models\Goal;
 use Illuminate\Http\Request;
 
-
+    
 class FinancialController extends Controller
 {
     // Afficher le formulaire pour ajouter une transaction
