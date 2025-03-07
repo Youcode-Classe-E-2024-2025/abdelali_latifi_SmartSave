@@ -7,6 +7,7 @@ use App\Http\Controllers\FinancialController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BudgetOptimizationController;
 
 // Accueil
 Route::get('/', function () {
@@ -51,7 +52,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/transaction/{id}', [FinancialController::class, 'deleteTransaction'])->name('financial.deleteTransaction');
 });
 
-
 Route::get('create_category', [CategoryController::class, 'create'])->name('categories.create');
 
 // Enregistrer une nouvelle catégorie
@@ -59,3 +59,5 @@ Route::post('/categories', [CategoryController::class, 'store'])->name('categori
 // Supprimer une catégorie
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
+Route::get('/budget/optimize', [BudgetOptimizationController::class, 'showOptimizationForm'])->name('budget.form');
+Route::post('/budget/optimize', [BudgetOptimizationController::class, 'optimizeBudget'])->name('budget.optimize');
