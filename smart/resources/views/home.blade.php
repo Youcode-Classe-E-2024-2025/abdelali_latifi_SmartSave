@@ -9,9 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-blue-100 min-h-screen font-sans text-gray-800">
-    <div class="container mx-auto px-4 py-8">
-        <!-- Header avec profil utilisateur -->
-        <header class="flex items-center justify-between mb-8 bg-white rounded-xl shadow-lg p-6">
+<header class="flex items-center justify-between mb-8 bg-white rounded-xl shadow-lg p-6">
     <div class="flex items-center space-x-6">
         <img src="{{ asset('storage/' . $profile->img) }}" 
              alt="Photo de {{ $profile->name }}" 
@@ -21,12 +19,25 @@
             <p class="text-gray-500">Votre tableau de bord financier personnel</p>
         </div>
     </div>
+    
     <div class="flex items-center space-x-4">
         <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
             Solde Total: {{ number_format($monthlyStats['net_balance'], 2) }}€
         </span>
-        
-        <!-- Bouton de déconnexion -->
+
+        <!-- Bouton Formulaire d'Optimisation -->
+        <a href="{{ route('budget.form') }}" 
+           class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition">
+            Formulaire d'Optimisation
+        </a>
+
+        <!-- Bouton Optimiser le Budget -->
+        <a href="{{ route('budget.optimize') }}" 
+           class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow-md transition">
+            Optimiser le Budget
+        </a>
+
+        <!-- Bouton de Déconnexion -->
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" 
