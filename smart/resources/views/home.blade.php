@@ -24,13 +24,6 @@
         <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
             Solde Total: {{ number_format($monthlyStats['net_balance'], 2) }}€
         </span>
-
-        <!-- Bouton Formulaire d'Optimisation -->
-        <a href="{{ route('budget.form') }}" 
-           class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg shadow-md transition">
-            Formulaire d'Optimisation
-        </a>
-
         <!-- Bouton Optimiser le Budget -->
         <a href="{{ route('budget.optimize') }}" 
            class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg shadow-md transition">

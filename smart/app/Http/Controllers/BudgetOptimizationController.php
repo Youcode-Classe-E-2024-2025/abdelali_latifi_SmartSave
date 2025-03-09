@@ -48,4 +48,5 @@ class BudgetOptimizationController extends Controller
         // Passer les résultats à la vue
         return view('budget.results', compact('results'));
     }
+    
 }

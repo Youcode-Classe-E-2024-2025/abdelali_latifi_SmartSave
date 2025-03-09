@@ -61,3 +61,5 @@ Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])-
 
 Route::get('/budget/optimize', [BudgetOptimizationController::class, 'showOptimizationForm'])->name('budget.form');
 Route::post('/budget/optimize', [BudgetOptimizationController::class, 'optimizeBudget'])->name('budget.optimize');
+Route::post('/budget/ showresult', [BudgetOptimizationController::class, ' showresult'])->name('budget. result');
+
