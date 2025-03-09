@@ -12,21 +12,31 @@
     <div class="container mx-auto px-4 py-8">
         <!-- Header avec profil utilisateur -->
         <header class="flex items-center justify-between mb-8 bg-white rounded-xl shadow-lg p-6">
-            <div class="flex items-center space-x-6">
-                <img src="{{ asset('storage/' . $profile->img) }}" 
-                     alt="Photo de {{ $profile->name }}" 
-                     class="w-20 h-20 rounded-full border-4 border-blue-500 object-cover">
-                <div>
-                    <h1 class="text-3xl font-bold text-blue-800">Bonjour, {{ $profile->name }}</h1>
-                    <p class="text-gray-500">Votre tableau de bord financier personnel</p>
-                </div>
-            </div>
-            <div>
-                <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
-                    Solde Total: {{ number_format($monthlyStats['net_balance'], 2) }}€
-                </span>
-            </div>
-        </header>
+    <div class="flex items-center space-x-6">
+        <img src="{{ asset('storage/' . $profile->img) }}" 
+             alt="Photo de {{ $profile->name }}" 
+             class="w-20 h-20 rounded-full border-4 border-blue-500 object-cover">
+        <div>
+            <h1 class="text-3xl font-bold text-blue-800">Bonjour, {{ $profile->name }}</h1>
+            <p class="text-gray-500">Votre tableau de bord financier personnel</p>
+        </div>
+    </div>
+    <div class="flex items-center space-x-4">
+        <span class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full">
+            Solde Total: {{ number_format($monthlyStats['net_balance'], 2) }}€
+        </span>
+        
+        <!-- Bouton de déconnexion -->
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" 
+                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg shadow-md transition">
+                Déconnexion
+            </button>
+        </form>
+    </div>
+</header>
+
 
         <!-- Grille principale avec statistiques et graphiques -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
